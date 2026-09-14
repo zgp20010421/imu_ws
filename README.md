@@ -182,6 +182,37 @@ rosrun imu_utils imu_an \
 | `max_time_min` | int | 数据采集时长上限（分钟），应与录制时长一致 |
 | `max_cluster` | int | Allan 方差聚类数，一般设为 100 |
 
+## 一键标定脚本
+
+脚本 `imu_to_kalibr.sh` 集成 roslaunch → rosbag play → 标定 → Kalibr 配置生成的完整流程。
+
+### 模式一：完整标定流程
+
+```bash
+cd ~/imu_ws
+./imu_to_kalibr.sh                                # 使用默认参数
+./imu_to_kalibr.sh -b /path/to/imu.bag            # 指定 rosbag
+./imu_to_kalibr.sh -b /path/to/imu.bag -l /path/to/your.launch  # 指定 rosbag + launch
+```
+
+流程：环境检查 → roslaunch 启动 imu_utils 节点 → rosbag play → 等待标定完成 → 提取 avg-axis 参数 → 生成 `data/kalibr/<name>_kalibr_imu.yaml`
+
+### 模式二：仅格式转换
+
+```bash
+./imu_to_kalibr.sh -s -y /path/to/imu_param.yaml  # 跳过标定，直接转换
+```
+
+### 参数说明
+
+| 参数 | 说明 | 默认值 |
+|------|------|--------|
+| `-b` | rosbag 文件路径 | `data/rosbag/realsense_imu_*.bag` |
+| `-l` | launch 文件路径 | `launch/d435i_imu_an.launch` |
+| `-o` | Kalibr 输出目录 | `data/kalibr/` |
+| `-s` | 跳过标定，仅转换 | — |
+| `-y` | imu_utils YAML（配合 `-s`） | — |
+
 ## 输出结果说明
 
 标定完成后，在 `data_save_path` 目录下会生成以下文件：
