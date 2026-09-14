@@ -190,17 +190,21 @@ rosrun imu_utils imu_an \
 
 ```bash
 cd ~/imu_ws
-./imu_to_kalibr.sh                                # 使用默认参数
-./imu_to_kalibr.sh -b /path/to/imu.bag            # 指定 rosbag
-./imu_to_kalibr.sh -b /path/to/imu.bag -l /path/to/your.launch  # 指定 rosbag + launch
+# 指定 rosbag 和 Kalibr 输出目录
+./imu_to_kalibr.sh -b /path/to/imu.bag -o /path/to/output/
+# 指定 rosbag + launch + 播放速率
+./imu_to_kalibr.sh -b /path/to/imu.bag -l /path/to/your.launch -r 100
 ```
 
-流程：环境检查 → roslaunch 启动 imu_utils 节点 → rosbag play → 等待标定完成 → 提取 avg-axis 参数 → 生成 `data/kalibr/<name>_kalibr_imu.yaml`
+流程：环境检查 → roslaunch 启动 imu_utils 节点 → rosbag 200x 加速播放 → 等待标定完成 → 提取 avg-axis 参数 → 生成 `<name>_kalibr_imu.yaml`
+
+> **说明**：rosbag 默认以 200 倍速播放，2 小时数据约 36 秒播完。标定节点按 `max_time_min` 截取数据，播放完成后自动退出并生成 Kalibr 配置。
 
 ### 模式二：仅格式转换
 
 ```bash
-./imu_to_kalibr.sh -s -y /path/to/imu_param.yaml  # 跳过标定，直接转换
+./imu_to_kalibr.sh -s -y /path/to/imu_param.yaml           # 跳过标定，直接转换
+./imu_to_kalibr.sh -s -y /path/to/imu_param.yaml -o /out/  # 指定输出目录
 ```
 
 ### 参数说明
@@ -210,6 +214,7 @@ cd ~/imu_ws
 | `-b` | rosbag 文件路径 | `data/rosbag/realsense_imu_*.bag` |
 | `-l` | launch 文件路径 | `launch/d435i_imu_an.launch` |
 | `-o` | Kalibr 输出目录 | `data/kalibr/` |
+| `-r` | rosbag 播放速率倍数 | `200` |
 | `-s` | 跳过标定，仅转换 | — |
 | `-y` | imu_utils YAML（配合 `-s`） | — |
 
