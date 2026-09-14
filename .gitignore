@@ -1,0 +1,57 @@
+# ======================
+# Catkin Workspace
+# ======================
+build/
+devel/
+logs/
+data/
+.catkin_workspace
+
+# ======================
+# CMake
+# ======================
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+CTestTestfile.cmake
+CTestConfiguration.ini
+CTestCustom.cmake
+*.cmake
+!CMakeLists.txt
+
+# ======================
+# 编译产物
+# ======================
+*.o
+*.so
+*.a
+*.out
+*.exe
+*.bin
+*.pyc
+__pycache__/
+
+# ======================
+# IDE / 编辑器
+# ======================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.cproject
+.settings/
+
+# ======================
+# ROS 相关
+# ======================
+*.bag
+*.orig
+
+# ======================
+# OS 生成文件
+# ======================
+.DS_Store
+Thumbs.db
