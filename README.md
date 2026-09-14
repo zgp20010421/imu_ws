@@ -72,23 +72,11 @@ sudo apt install libceres-dev
 
 ## 编译步骤
 
-### 1. 初始化 catkin 工作空间（如尚未初始化）
+### 1. 构建代码工作
 
 ```bash
-mkdir -p ~/imu_ws/src
-cd ~/imu_ws/src
-catkin_init_workspace
-```
-
-### 2. 放置代码到工作空间
-
-将 `imu_utils` 和 `code_utils` 两个功能包放入 `src/` 目录下：
-
-```bash
-cd ~/imu_ws/src
-# 如果是从 git 仓库获取：
-# git clone <repo_url>/imu_utils.git
-# git clone <repo_url>/code_utils.git
+cd ~/
+git clone https://github.com/zgp20010421/imu_ws.git
 ```
 
 确认目录结构如下：
